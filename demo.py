@@ -84,3 +84,25 @@ if not filtered_df.empty:
     st.write(filtered_df)
 else:
     st.write("No se encontraron resultados para los filtros seleccionados.")
+    # ... (tu código existente de Streamlit) ...
+
+region_filter = st.multiselect("Selecciona las regiones:", df['Region'].unique())
+state_filter = st.multiselect("Selecciona los estados:", df['State'].unique())
+
+if region_filter and state_filter:
+  df_filtered = df[df['Region'].isin(region_filter) & df['State'].isin(state_filter)]
+  st.dataframe(df_filtered)
+  if not df_filtered.empty:
+    st.write(df_filtered.iloc[0])  # Imprimir solo el primer resultado
+elif region_filter:
+  df_filtered = df[df['Region'].isin(region_filter)]
+  st.dataframe(df_filtered)
+  if not df_filtered.empty:
+    st.write(df_filtered.iloc[0])  # Imprimir solo el primer resultado
+elif state_filter:
+  df_filtered = df[df['State'].isin(state_filter)]
+  st.dataframe(df_filtered)
+  if not df_filtered.empty:
+    st.write(df_filtered.iloc[0])  # Imprimir solo el primer resultado
+else:
+  st.dataframe(df)
