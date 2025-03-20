@@ -106,3 +106,9 @@ elif state_filter:
     st.write(df_filtered.iloc[0])  # Imprimir solo el primer resultado
 else:
   st.dataframe(df)
+# Crea una gráfica de pastel con la columna Category
+category_counts = df['Category'].value_counts()
+fig, ax = plt.subplots()
+ax.pie(category_counts, labels=category_counts.index, autopct='%1.1f%%', startangle=90)
+ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+st.pyplot(fig)
