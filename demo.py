@@ -57,32 +57,36 @@ except Exception as e:
 
 # Filtro para la columna 'Region'
 if 'Region' in df.columns:
-    region_filter = st.selectbox('Selecciona una Región', df['Region'].unique())
+    selected_regions = st.multiselect('Selecciona Regiones', df['Region'].unique())
+    if selected_regions:
+        filtered_df = df[df['Region'].isin(selected_regions)]
+    else:
+        filtered_df = df
 else:
     st.warning("La columna 'Region' no existe en el DataFrame. No se puede aplicar el filtro de región.")
-    region_filter = None
+    filtered_df = df
 
-# Filtro para la columna 'State'
-if 'State' in df.columns:
-    state_filter = st.selectbox('Selecciona un Estado', df['State'].unique())
+# Filtro para la columna 'State' basado en el filtro de 'Region'
+if 'State' in filtered_df.columns:
+    selected_states = st.multiselect('Selecciona Estados', filtered_df['State'].unique())
+    if selected_states:
+        filtered_df = filtered_df[filtered_df['State'].isin(selected_states)]
 else:
     st.warning("La columna 'State' no existe en el DataFrame. No se puede aplicar el filtro de estado.")
-    state_filter = None
 
-# Aplica los filtros
-if region_filter is not None and state_filter is not None:
-    filtered_df = df[(df['Region'] == region_filter) & (df['State'] == state_filter)]
-elif region_filter is not None:
-    filtered_df = df[df['Region'] == region_filter]
-elif state_filter is not None:
-    filtered_df = df[df['State'] == state_filter]
+
+# Gráfica de pastel con la columna 'Category'
+if 'Category' in filtered_df.columns:
+    st.subheader('Gráfica de Pastel de Categorías')
+    category_counts = filtered_df['Category'].value_counts()
+    fig_pie = px.pie(category_counts, values=category_counts.values, names=category_counts.index, title='Distribución de Categorías')
+    st.plotly_chart(fig_pie)
 else:
-    filtered_df = df  # Si no hay filtros, muestra el DataFrame original
+    st.warning("La columna 'Category' no existe en el DataFrame. No se puede generar la gráfica de pastel.")
 
 # Muestra el resultado
 if not filtered_df.empty:
     st.write(filtered_df)
 else:
     st.write("No se encontraron resultados para los filtros seleccionados.")
-    # ... (tu código existente de Streamlit) ...
 
