@@ -24,8 +24,7 @@ fig1 = px.bar(
     facet_col="Category",
     title="Ventas Acumuladas por Año, Categoría y Sub-Categoría",
     labels={"Sales": "Ventas"},
-    height=500
-)
+    height=500)
 st.plotly_chart(fig1)
 
 # Gráfica 2: Ventas por Año, Categoría y Sub-Categoría (facet_col=Año)
@@ -38,8 +37,7 @@ fig2 = px.bar(
     facet_col="Año",
     title="Ventas por Categoría y Sub-Categoría en cada Año",
     labels={"Sales": "Ventas"},
-    height=500
-)
+    height=500)
 st.plotly_chart(fig2)
 
 # Gráfica 3: Línea de ventas acumuladas por año y categoría
@@ -52,8 +50,7 @@ fig3 = px.line(
     color="Category",
     title="Ventas Acumuladas por Año y Categoría",
     labels={"Sales": "Ventas"},
-    markers=True
-)
+    markers=True)
 st.plotly_chart(fig3)
 
 # Gráfica 4: Barras de ventas acumuladas por región
@@ -65,6 +62,5 @@ fig4 = px.bar(
     y="Sales",
     title="Ventas Acumuladas por Región",
     labels={"Sales": "Ventas"},
-    height=400
-)
+    height=400)
 st.plotly_chart(fig4)
